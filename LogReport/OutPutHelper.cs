@@ -39,7 +39,7 @@ namespace LogReport
         /// </summary>
         public static void RefreshLog()
         {
-            LogManager.GetCurrentClassLogger().Trace(Logs.ToString);
+            LogManager.GetCurrentClassLogger().Info(Logs.ToString);
             Logs.Clear();
         }
     }

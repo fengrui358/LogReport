@@ -12,7 +12,6 @@ namespace LogReport
 {
     class Program
     {
-        private ILogger _logger = LogManager.GetCurrentClassLogger();
         private static string _logDirectory;
         private const string MatchRegexSeparate = ";;;";
         private static List<string> _matchRegexList = new List<string>();
@@ -85,9 +84,8 @@ namespace LogReport
 
             if (!_matchRegexList.Any())
             {
-                //TODO:加入日志的默认匹配规则，Error和Fatal
-                _matchRegexList.Add("[ERROR]");
-                _matchRegexList.Add("[FATAL]");
+                _matchRegexList.Add(@"\[ERROR\]");
+                _matchRegexList.Add(@"\[FATAL\]");
             }
 
             foreach (var regex in _matchRegexList)

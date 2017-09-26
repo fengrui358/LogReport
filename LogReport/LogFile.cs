@@ -13,8 +13,9 @@ namespace LogReport
     {
         #region 字段
 
+        private readonly StringBuilder _records = new StringBuilder();
         private readonly string _filePath;
-        private IEnumerable<Regex> _matchRegexs;
+        private readonly IEnumerable<Regex> _matchRegexs;
 
         #endregion
 
@@ -35,10 +36,35 @@ namespace LogReport
         /// </summary>
         public void ReadAndRecord()
         {
+            var tempMatchs = new Dictionary<int, string>();
+
             if (!string.IsNullOrEmpty(_filePath) && File.Exists(_filePath))
             {
-                
-                
+                var lineNum = 0;
+
+                foreach (var readLine in File.ReadLines(_filePath))
+                {
+                    lineNum++;
+
+                    foreach (var regex in _matchRegexs)
+                    {
+                        if (regex.Match(readLine).Success)
+                        {
+                            tempMatchs.Add(lineNum, readLine);
+                            break;
+                        }
+                    }
+                }
+
+                if (tempMatchs.Any())
+                {
+                    _records.AppendLine($"来源机器:{Environment.MachineName}  来源文件:{_filePath}  共{tempMatchs.Count}条记录");
+
+                    foreach (var match in tempMatchs)
+                    {
+                        _records.AppendLine($"行数:{match.Key}  {match.Value}");
+                    }
+                }
             }
         }
 
@@ -48,7 +74,7 @@ namespace LogReport
         /// <returns></returns>
         public string GetOutput()
         {
-            return string.Empty;
+            return _records.ToString();
         }
 
         #endregion
