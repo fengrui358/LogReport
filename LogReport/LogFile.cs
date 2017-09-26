@@ -62,7 +62,7 @@ namespace LogReport
 
                     foreach (var match in tempMatchs)
                     {
-                        _records.AppendLine($"行数:{match.Key}  {match.Value}");
+                        _records.AppendLine($"【行数:{match.Key}】  {match.Value}");
                     }
                 }
             }
