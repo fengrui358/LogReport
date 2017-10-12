@@ -39,8 +39,11 @@ namespace LogReport
         /// </summary>
         public static void RefreshLog()
         {
-            LogManager.GetCurrentClassLogger().Info(Logs.ToString);
-            Logs.Clear();
+            if (Logs.Length > 0)
+            {
+                LogManager.GetCurrentClassLogger().Info(Logs.ToString);
+                Logs.Clear();
+            }
         }
     }
 }
